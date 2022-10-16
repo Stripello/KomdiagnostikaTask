@@ -19,11 +19,11 @@ namespace BookCathalog.Service
         public TypeOfError AddBook(Book book)
         {
             var answer = book.Validate();
-            if (answer == TypeOfError.NoError)
+            //if (answer == TypeOfError.NoError)
             {
                 books.Add(book);
             }
-            return answer;
+            return answer[0];
         }
 
         public IList<Book> GetAll()

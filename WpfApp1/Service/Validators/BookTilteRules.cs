@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookCathalog.Service.Validators
 {
-    public class BookTilteRules : ValidationRules
+    public class BookTilteRules
     {
 
     }

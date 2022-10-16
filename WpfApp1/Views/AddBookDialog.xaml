@@ -33,7 +33,7 @@
                 <Binding Path="BookTitle"
              UpdateSourceTrigger="PropertyChanged" >
                     <Binding.ValidationRules>
-                        <c:AgeRangeRule Min="21" Max="130"/>
+                        <!--<c:AgeRangeRule Min="21" Max="130"/>-->
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
