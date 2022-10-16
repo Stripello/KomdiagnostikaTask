@@ -22,7 +22,9 @@ namespace BookCathalog.ViewModels
         {
             _bookServise = bookService;
         }
+        
         private IbookServise _bookServise;
+        public Book SomeBook { get; set; } = new Book();
         public string BookTitle { get; set; }
         public string Author { get; set; }
         public int Year { get; set; }
