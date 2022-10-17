@@ -24,6 +24,7 @@ namespace BookCathalog
             var dbName = ConfigurationManager.AppSettings["dbname"];
             containerRegistry.RegisterDialog<AddBookDialog, AddBookDialogViewModel>();
             containerRegistry.RegisterInstance<IbookServise>(new BooksServiceLiteDb(dbName,dbFileName));
+            containerRegistry.RegisterSingleton<IImageProcessor,ImageProcessor>();
         }
         protected override Window CreateShell()
         {
@@ -36,8 +37,7 @@ namespace BookCathalog
          * bd saves
          * bd read
          * unit tests
-         * each property validation
-         * 
+         * maximal year above current in appconfig
          * 
          * MVVM model relations
          * 

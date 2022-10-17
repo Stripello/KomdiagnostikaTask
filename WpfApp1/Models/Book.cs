@@ -17,7 +17,7 @@ namespace BookCathalog.Dal.Models
         private const int yearAboveCurrent = 3;
         public string Error { get => null; }
 
-
+        //Using for validate data entered by user in AddBookDialog form.
         public string this[string propertyName]
         {
             get
@@ -103,53 +103,6 @@ namespace BookCathalog.Dal.Models
                 return null;
             }
         }
-
-        /*
-        private const int maxYearOverCurrent = 2;
-        public IList<TypeOfError> Validate()
-        {
-            var answer = new List<TypeOfError>();
-            if (string.IsNullOrEmpty(Title))
-            {
-                answer.Add( TypeOfError.InvalidTitle);
-            }
-            if (string.IsNullOrEmpty(Author) || char.IsLower(Author[0]) || !Author.All(x => char.IsLetter(x)))
-            {
-                answer.Add(TypeOfError.InvalidAuthor);
-            }
-            if (Year < 0 || Year > DateTime.Now.Year + maxYearOverCurrent)
-            {
-                answer.Add(TypeOfError.InvalidYear);
-            }
-            if (Isbn.Length != 10)
-            {
-                answer.Add(TypeOfError.InvalidIsbn);
-            }
-            var isbnSum = 0;
-            for (int i = 0; i < 9; i++)
-            {
-                //TODO: X case and 13 chars case
-                if (!int.TryParse(Isbn[i].ToString(), out int tmp))
-                {
-                    answer.Add(TypeOfError.InvalidIsbn);
-                }
-                else
-                {
-                    isbnSum += (10 - i) * tmp;
-                }
-            }
-            if (isbnSum % 11 != 0)
-            {
-                answer.Add(TypeOfError.InvalidIsbn);
-            }
-            if (!System.Guid.TryParse(Guid, out _))
-            {
-                answer.Add(TypeOfError.InvalidGuid);
-            }
-
-            return answer.Count > 0 ? answer : new List<TypeOfError> { TypeOfError.NoError };
-        }
-        */
     }
 
 }

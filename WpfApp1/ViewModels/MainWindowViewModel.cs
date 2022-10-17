@@ -14,12 +14,10 @@ namespace BookCathalog.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-       // private ICustomerStore _customerStore;
         private IDialogService _dialogService;
 
-        public MainWindowViewModel(/*ICustomerStore customerStore*/ IDialogService dialogService)
+        public MainWindowViewModel(IDialogService dialogService)
         {
-            //_customerStore = customerStore;
             _dialogService = dialogService;
         }
 
@@ -31,7 +29,6 @@ namespace BookCathalog.ViewModels
             get => _selectedCustomer;
             set => SetProperty<string>(ref _selectedCustomer, value);
         }
-        
 
 
         private DelegateCommand _commandLoad;

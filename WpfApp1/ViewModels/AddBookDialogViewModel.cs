@@ -18,21 +18,14 @@ namespace BookCathalog.ViewModels
 {
     public class AddBookDialogViewModel : BindableBase, IDialogAware
     {
-        public AddBookDialogViewModel(IbookServise bookService)
+        public AddBookDialogViewModel(IbookServise bookService, IImageProcessor imageProcessor)
         {
             _bookServise = bookService;
+            _imageProcessor = imageProcessor;
         }
-        
+        private IImageProcessor _imageProcessor;
         private IbookServise _bookServise;
         public Book CurrentBook { get; set; } = new Book();
-        
-        public string BookTitle { get; set; }
-        public string Author { get; set; }
-        public int Year { get; set; }
-        public string Isbn { get; set; }
-        public string Guid { get; set; }
-        public string About { get; set; }
-        
         private string _frontPageLocation = string.Empty;
         public string FrontPageLocation
         {
@@ -46,20 +39,8 @@ namespace BookCathalog.ViewModels
 
         private void AddBook()
         {
-            var book = new Book() { Title = this.BookTitle,
-                                    Author = this.Author,
-                                    Year = this.Year,
-                                    Isbn = this.Isbn,
-                                    Guid = this.Guid,
-                                    About = this.About,
-            };
-            try
-            {
-                var some = new BitmapImage(new Uri(_frontPageLocation));
-            }
-            catch
-            {
-            }
+            CurrentBook.FrontPage = _imageProcessor.ImageToByte(_frontPageLocation);
+            _bookServise.AddBook(CurrentBook);
         }
 
         private DelegateCommand _selectFrontPage;

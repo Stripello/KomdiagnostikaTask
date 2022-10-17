@@ -11,12 +11,12 @@ namespace BookCathalog.Service
     public class BooksServiceLiteDb : IbookServise
     {
         //Must be set by business in app.config file.
-        const string _defaultDbName = "BooksLiteDatabase";
+        const string _defaultDbFileName = "BooksLiteDatabase.db";
         private readonly string _dbLocation;
         private readonly string _dbName;
-        public BooksServiceLiteDb(string dbName, string dbFileName = _defaultDbName, string dbFolder = "")
+        public BooksServiceLiteDb( string dbName, string dbFileName = _defaultDbFileName,string dbFolder = "")
         {
-            var _dbLocation = string.Empty;
+            _dbLocation = string.Empty;
             if (Directory.Exists(dbFolder))
             {
                 _dbLocation += dbFolder;
@@ -26,15 +26,15 @@ namespace BookCathalog.Service
                 _dbLocation += Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
                 _dbLocation += @"\Data";
             }
-            _dbLocation += @$"\{dbFileName}.db";
+            _dbLocation += @$"\{dbFileName}";
             _dbName = dbName;
         }
         public void AddBook(Book book)
         {
             using (var db = new LiteDatabase(_dbLocation))
             {
-                var storedFileSystemNodes = db.GetCollection<Book>(_dbName);
-                storedFileSystemNodes.Insert(book);
+                var storedBooks = db.GetCollection<Book>(_dbName);
+                storedBooks.Insert(book);
             }
         }
 

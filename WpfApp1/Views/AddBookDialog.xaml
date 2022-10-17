@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BookCathalog.Views"
-             xmlns:validators="clr-namespace:BookCathalog.Models.Validators"
              mc:Ignorable="d" 
              Height="440" Width="800">
     <Grid>
@@ -51,7 +50,7 @@
             </TextBox.Text>
         </TextBox>
 
-        <TextBox Grid.Column="1" Grid.Row="2">
+        <TextBox Grid.Column="1" Grid.Row="2" PreviewTextInput="PreviewYearInput">
             <TextBox.Text>
                 <Binding Path="CurrentBook.Year" UpdateSourceTrigger="PropertyChanged">
                       <Binding.ValidationRules>
