@@ -6,12 +6,12 @@ namespace BookCathalog.Dal.Models
 {
     public class Book : IDataErrorInfo
     {
-        public string Title { get; set; }
-        public string Author { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Author { get; set; } = string.Empty;
         public int Year { get; set; }
-        public string Isbn { get; set; }
-        public string Guid { get; set; }
-        public string About { get; set; }
+        public string Isbn { get; set; } = string.Empty;
+        public string Guid { get; set; } = string.Empty;
+        public string About { get; set; } = string.Empty;
         public byte[] FrontPage { get; set; }
         //Buisness must set maximal year above current.
         private const int yearAboveCurrent = 3;
