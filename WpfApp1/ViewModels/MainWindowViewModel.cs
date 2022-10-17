@@ -14,12 +14,12 @@ namespace BookCathalog.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private ICustomerStore _customerStore;
+       // private ICustomerStore _customerStore;
         private IDialogService _dialogService;
 
-        public MainWindowViewModel(ICustomerStore customerStore, IDialogService dialogService)
+        public MainWindowViewModel(/*ICustomerStore customerStore*/ IDialogService dialogService)
         {
-            _customerStore = customerStore;
+            //_customerStore = customerStore;
             _dialogService = dialogService;
         }
 

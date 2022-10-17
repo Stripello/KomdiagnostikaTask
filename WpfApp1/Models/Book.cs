@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace BookCathalog.Dal.Models
@@ -18,7 +12,7 @@ namespace BookCathalog.Dal.Models
         public string Isbn { get; set; }
         public string Guid { get; set; }
         public string About { get; set; }
-        public Image FrontPage { get; set; }
+        public byte[] FrontPage { get; set; }
         //Buisness must set maximal year above current.
         private const int yearAboveCurrent = 3;
         public string Error { get => null; }
@@ -36,7 +30,7 @@ namespace BookCathalog.Dal.Models
                             return "Empty field is not allowed.";
                         }
                         break;
-                        case nameof(Author):
+                    case nameof(Author):
                         if (string.IsNullOrEmpty(Author))
                         {
                             return "Empty field is not allowed.";
@@ -56,7 +50,7 @@ namespace BookCathalog.Dal.Models
                         var tmp = Isbn.ToUpper();
                         foreach (var element in tmp)
                         {
-                            if (!char.IsDigit(element) && !(element=='X'))
+                            if (!char.IsDigit(element) && !(element == 'X'))
                             {
                                 return "ISBN contains forbidden symbols.";
                             }
@@ -69,7 +63,7 @@ namespace BookCathalog.Dal.Models
                             {
                                 if (tmp[i] == 'X')
                                 {
-                                    isbnSum += (10-i) * 10;
+                                    isbnSum += (10 - i) * 10;
                                 }
                                 else
                                 {
@@ -85,7 +79,7 @@ namespace BookCathalog.Dal.Models
                             {
                                 if (tmp[i] == 'X')
                                 {
-                                    isbnSum += (i % 2 == 0 ? 1 :3) * 10;
+                                    isbnSum += (i % 2 == 0 ? 1 : 3) * 10;
                                 }
                                 else
                                 {
@@ -110,7 +104,7 @@ namespace BookCathalog.Dal.Models
             }
         }
 
-        //Must me set by buisness
+        /*
         private const int maxYearOverCurrent = 2;
         public IList<TypeOfError> Validate()
         {
@@ -155,6 +149,7 @@ namespace BookCathalog.Dal.Models
 
             return answer.Count > 0 ? answer : new List<TypeOfError> { TypeOfError.NoError };
         }
+        */
     }
 
 }

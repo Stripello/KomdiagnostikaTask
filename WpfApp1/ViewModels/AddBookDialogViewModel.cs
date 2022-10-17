@@ -25,12 +25,14 @@ namespace BookCathalog.ViewModels
         
         private IbookServise _bookServise;
         public Book SomeBook { get; set; } = new Book();
+        
         public string BookTitle { get; set; }
         public string Author { get; set; }
         public int Year { get; set; }
         public string Isbn { get; set; }
         public string Guid { get; set; }
         public string About { get; set; }
+        
         private string _frontPageLocation = string.Empty;
         public string FrontPageLocation
         {
@@ -51,14 +53,12 @@ namespace BookCathalog.ViewModels
                                     Guid = this.Guid,
                                     About = this.About,
             };
-            var answer = book.Validate();
             try
             {
                 var some = new BitmapImage(new Uri(_frontPageLocation));
             }
             catch
             {
-                answer.Add(TypeOfError.ImageError);
             }
         }
 

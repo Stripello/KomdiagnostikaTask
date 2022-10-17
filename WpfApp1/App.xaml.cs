@@ -20,9 +20,10 @@ namespace BookCathalog
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterDialog<AddBookDialog,AddBookDialogViewModel>();
-            containerRegistry.Register<ICustomerStore, DbCustomerStore>();
-            containerRegistry.Register<IbookServise, BooksService>();
+            var dbFileName = ConfigurationManager.AppSettings["litedbfilename"];
+            var dbName = ConfigurationManager.AppSettings["dbname"];
+            containerRegistry.RegisterDialog<AddBookDialog, AddBookDialogViewModel>();
+            containerRegistry.RegisterInstance<IbookServise>(new BooksServiceLiteDb(dbName,dbFileName));
         }
         protected override Window CreateShell()
         {
