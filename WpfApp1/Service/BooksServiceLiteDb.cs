@@ -29,6 +29,25 @@ namespace BookCathalog.Service
             _dbLocation += @$"\{dbFileName}";
             _dbName = dbName;
         }
+
+        public void DeleteBook(Book book)
+        {
+            using (var db = new LiteDatabase(_dbLocation))
+            {
+                var storedBooks = db.GetCollection<Book>(_dbName);
+                storedBooks.DeleteMany(x => x.Guid == book.Guid && x.Author == book.Author && x.Isbn == book.Isbn);
+            }
+        }
+
+        public void UpdateBook(Book book)
+        {
+            using (var db = new LiteDatabase(_dbLocation))
+            {
+                var storedBooks = db.GetCollection<Book>(_dbName);
+                storedBooks.DeleteMany(x => x.Guid == book.Guid && x.Author == book.Author && x.Isbn == book.Isbn);
+            }
+        }
+
         public void AddBook(Book book)
         {
             using (var db = new LiteDatabase(_dbLocation))

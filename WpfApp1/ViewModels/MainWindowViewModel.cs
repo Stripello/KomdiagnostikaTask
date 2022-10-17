@@ -9,27 +9,29 @@ using System.Text;
 using System.Threading.Tasks;
 using BookCathalog.Service;
 using Prism.Services.Dialogs;
+using BookCathalog.Dal.Models;
 
 namespace BookCathalog.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
         private IDialogService _dialogService;
+        private IbookServise _ibookServise;
+        public ObservableCollection<Book> AllBooks { get; private set; } = new ObservableCollection<Book>();
 
-        public MainWindowViewModel(IDialogService dialogService)
+        public MainWindowViewModel(IDialogService dialogService, IbookServise bookService)
         {
             _dialogService = dialogService;
+            _ibookServise = bookService;
+            AllBooks.AddRange(_ibookServise.GetAll());
         }
 
-        public ObservableCollection<string> Customers { get; private set; } = new ObservableCollection<string>();
-
-        private string _selectedCustomer = null;
-        public string SelectedCustomer
+        private Book _selectedBook = null;
+        public Book SelectedBook
         {
-            get => _selectedCustomer;
-            set => SetProperty<string>(ref _selectedCustomer, value);
+            get => _selectedBook;
+            set => SetProperty<Book>(ref _selectedBook, value);
         }
-
 
         private DelegateCommand _commandLoad;
         public DelegateCommand CommandLoad =>
@@ -38,6 +40,15 @@ namespace BookCathalog.ViewModels
         private void CommandLoadExecute()
         {
             _dialogService.ShowDialog("AddBookDialog");
+        }
+
+        private DelegateCommand _commandDelete;
+        public DelegateCommand CommandDelete =>
+            _commandDelete ?? (_commandDelete = new DelegateCommand(CommandDeleteExecute));
+        private void CommandDeleteExecute()
+        {
+            _ibookServise.DeleteBook(_selectedBook);
+            AllBooks.Remove(_selectedBook);
         }
     }
 }
