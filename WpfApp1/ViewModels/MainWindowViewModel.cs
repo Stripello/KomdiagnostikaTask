@@ -50,5 +50,14 @@ namespace BookCathalog.ViewModels
             _ibookServise.DeleteBook(_selectedBook);
             AllBooks.Remove(_selectedBook);
         }
+
+        private DelegateCommand _commandUpdate;
+
+        public DelegateCommand CommandUpdate =>
+            _commandUpdate ?? (_commandUpdate = new DelegateCommand(CommandUpdateExecute));
+        private void CommandUpdateExecute()
+        {
+            _dialogService.ShowDialog("UpdateBookDialog");
+        }
     }
 }

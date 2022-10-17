@@ -12,6 +12,6 @@ namespace BookCathalog.Service
         public IList<Book> GetAll();
         public void AddBook(Book book);
         public void DeleteBook(Book book);
-        public void UpdateBook(Book oldBook);
+        public void UpdateBook(Book oldBook, Book newBook);
     }
 }

@@ -39,12 +39,20 @@ namespace BookCathalog.Service
             }
         }
 
-        public void UpdateBook(Book book)
+        public void UpdateBook(Book oldBook, Book newBook)
         {
             using (var db = new LiteDatabase(_dbLocation))
             {
                 var storedBooks = db.GetCollection<Book>(_dbName);
-                storedBooks.DeleteMany(x => x.Guid == book.Guid && x.Author == book.Author && x.Isbn == book.Isbn);
+                var book = storedBooks.Query().Where(x => x.Guid == oldBook.Guid && x.Author == oldBook.Author && x.Isbn == oldBook.Isbn).First();
+                book.Title = newBook.Title;
+                book.Author = newBook.Author;
+                book.About = newBook.About;
+                book.Guid = newBook.Guid;
+                book.Isbn = newBook.Isbn;
+                book.Year = newBook.Year;
+                book.FrontPage = newBook.FrontPage;
+                storedBooks.Update(book);
             }
         }
 
