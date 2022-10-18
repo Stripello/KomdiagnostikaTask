@@ -42,7 +42,7 @@
                 </Style>
             </StackPanel.Resources>
             <Button Command="{Binding CommandLoad}" Content="ADD"/>
-            <Button Command="{Binding CommandChange}" Content="CHANGE"/>
+            <Button Command="{Binding CommandEdit}" Content="EDIT"/>
             <Button Command="{Binding CommandDelete}" Content="DELETE"/>
         </StackPanel>
     </Grid>

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BookCathalog.Service;
 using Prism.Services.Dialogs;
 using BookCathalog.Dal.Models;
+using System.Runtime.CompilerServices;
 
 namespace BookCathalog.ViewModels
 {
@@ -51,13 +52,21 @@ namespace BookCathalog.ViewModels
             AllBooks.Remove(_selectedBook);
         }
 
-        private DelegateCommand _commandUpdate;
+        private DelegateCommand _commandEdit;
 
-        public DelegateCommand CommandUpdate =>
-            _commandUpdate ?? (_commandUpdate = new DelegateCommand(CommandUpdateExecute));
+        public DelegateCommand CommandEdit =>
+            _commandEdit ?? (_commandEdit = new DelegateCommand(CommandUpdateExecute));
         private void CommandUpdateExecute()
         {
-            _dialogService.ShowDialog("UpdateBookDialog");
+            var param = new DialogParameters();
+            param.Add("currentBook", _selectedBook);
+            _dialogService.ShowDialog("EditBookDialog", param, Callback) ;
+
+            void Callback(IDialogResult result)
+            {
+                //tcs.SetResult(result.Parameters.GetValue<bool>("confirmed"));
+            }
         }
+       
     }
 }

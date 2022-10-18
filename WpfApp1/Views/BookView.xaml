@@ -98,6 +98,6 @@
         <Button Grid.Row="6" HorizontalAlignment="Left" Grid.Column="1" Content ="Select" Height="50" Width="100" VerticalAlignment="Top" Click="Button_Click"/>
 
     </Grid>
-        <Image Grid.Column="1" Grid.Row="0" Stretch="UniformToFill" Source="{Binding Book.FrontPage}"/>
+        <Image Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding Book.FrontPage}"/>
         </Grid>
 </UserControl>

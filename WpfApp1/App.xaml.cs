@@ -23,6 +23,7 @@ namespace BookCathalog
             var dbFileName = ConfigurationManager.AppSettings["litedbfilename"];
             var dbName = ConfigurationManager.AppSettings["dbname"];
             containerRegistry.RegisterDialog<AddBookDialog, AddBookDialogViewModel>();
+            containerRegistry.RegisterDialog<EditBookDialog, EditBookDialogViewModel>(); 
             containerRegistry.RegisterInstance<IbookServise>(new BooksServiceLiteDb(dbName,dbFileName));
             containerRegistry.RegisterSingleton<IImageProcessor,ImageProcessor>();
         }
