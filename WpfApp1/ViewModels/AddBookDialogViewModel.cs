@@ -42,10 +42,11 @@ namespace BookCathalog.ViewModels
             CurrentBook.FrontPage = _imageProcessor.ImageToByte(_frontPageLocation);
             _bookServise.AddBook(CurrentBook);
         }
-
+        /*
         private DelegateCommand _selectFrontPage;
         public DelegateCommand SelectFrontPageCommand =>
             _selectFrontPage ?? (_selectFrontPage = new DelegateCommand(SelectFrontPage));
+        
         private void SelectFrontPage()
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
@@ -58,7 +59,8 @@ namespace BookCathalog.ViewModels
                 FrontPageLocation = dialog.FileName;
             }
         }
-
+        */
+        //Some neceserry Prism stuff.
         public string Title { get; set; } = "Adding book";
 
         public event Action<IDialogResult> RequestClose;
