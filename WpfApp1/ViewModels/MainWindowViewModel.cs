@@ -53,7 +53,6 @@ namespace BookCathalog.ViewModels
         }
 
         private DelegateCommand _commandEdit;
-
         public DelegateCommand CommandEdit =>
             _commandEdit ?? (_commandEdit = new DelegateCommand(CommandUpdateExecute));
         private void CommandUpdateExecute()

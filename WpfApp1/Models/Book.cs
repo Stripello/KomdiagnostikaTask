@@ -147,6 +147,20 @@ namespace BookCathalog.Dal.Models
                 return null;
             }
         }
+
+        public Book CreateCopy()
+        {
+            var answer = new Book();
+            answer.Title = _title;
+            answer.Author = _author;
+            answer.Year = _year;
+            answer.Isbn = _isbn;
+            answer.Guid = _guid;
+            answer.About = _about;
+            answer.FrontPage = (byte[])_frontPage.Clone();
+
+            return answer;
+        }
     }
 
 }

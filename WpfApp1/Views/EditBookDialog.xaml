@@ -14,8 +14,16 @@
         <local:BookView Book="{Binding CurrentBook}">
 
         </local:BookView>
-
-        <Button Content="Add" Grid.Column="1" Grid.Row="7" Width="200" Height="30" Command="{Binding AddBookCommand}"/>
-
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="10,10,10,10"/>
+                    <Setter Property="Width" Value="80"/>
+                    <Setter Property="Height" Value="40"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Command="{Binding EditBookCommand}" Content="Update"/>
+            <Button Command="{Binding UdnoChangesCommand}" Content="Undo"/>
+        </StackPanel>
     </Grid>
 </UserControl>
