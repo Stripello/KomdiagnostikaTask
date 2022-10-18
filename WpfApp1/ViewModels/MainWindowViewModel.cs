@@ -41,6 +41,8 @@ namespace BookCathalog.ViewModels
         private void CommandLoadExecute()
         {
             _dialogService.ShowDialog("AddBookDialog");
+            var newOne = _ibookServise.GetAll();
+            AllBooks.AddRange(newOne.Except(AllBooks));
         }
 
         private DelegateCommand _commandDelete;
@@ -59,7 +61,9 @@ namespace BookCathalog.ViewModels
         {
             var param = new DialogParameters();
             param.Add("currentBook", _selectedBook);
-            _dialogService.ShowDialog("EditBookDialog", param, Callback) ;
+            _dialogService.ShowDialog("EditBookDialog", param, Callback);
+            AllBooks.Clear();
+            AllBooks.AddRange(_ibookServise.GetAll());
 
             void Callback(IDialogResult result)
             {

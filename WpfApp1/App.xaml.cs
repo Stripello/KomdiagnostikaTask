@@ -35,10 +35,12 @@ namespace BookCathalog
 
         /*
          * TODO:
-         * bd saves
-         * bd read
+         * update view list on fly after adding and updating elements
+         * mute buttons
+         * closing after save new book
          * unit tests
          * maximal year above current in appconfig
+         * show error types
          * 
          * MVVM model relations
          * 

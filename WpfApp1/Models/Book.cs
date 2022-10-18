@@ -1,5 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.RightsManagement;
 using System.Windows.Controls;
@@ -7,46 +9,47 @@ using System.Windows.Navigation;
 
 namespace BookCathalog.Dal.Models
 {
-    public class Book : BindableBase, IDataErrorInfo
+    public class Book : BindableBase, IDataErrorInfo , IEqualityComparer
     {
+        public int Id { get; set; }
         private string _title = string.Empty;
         public string Title
         {
             get => _title;
             set => SetProperty<string>(ref _title, value);
         }
-        public string _author = string.Empty;
+        private string _author = string.Empty;
         public string Author
         {
             get => _author;
             set => SetProperty<string>(ref _author, value);
         }
-        public int _year;
+        private int _year;
         public int Year
         {
             get => _year;
             set => SetProperty<int>(ref _year, value);
         }
-        public string _isbn = string.Empty;
+        private string _isbn = string.Empty;
         public string Isbn
         {
             get => _isbn;
             set => SetProperty<string>(ref _isbn, value);
         }
 
-        public string _guid = string.Empty;
+        private string _guid = string.Empty;
         public string Guid
         {
             get => _guid;
             set => SetProperty<string>(ref _guid, value);
         }
-        public string _about = string.Empty;
+        private string _about = string.Empty;
         public string About
         {
             get => _about;
             set => SetProperty<string>(ref _about, value);
         }
-        public byte[] _frontPage;
+        private byte[] _frontPage;
         public byte[] FrontPage
         {
             get => _frontPage;
@@ -148,6 +151,59 @@ namespace BookCathalog.Dal.Models
             }
         }
 
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !(obj is Book))
+            {
+                return false;
+            }
+            var casted = (Book)obj;
+            if (Title != casted.Title || Author != casted.Author || Year != casted.Year ||
+                Isbn != casted.Isbn || Guid != casted.Guid || About != casted.About)
+            {
+                return false;
+            }
+            if (this.FrontPage.Length != casted.FrontPage.Length)
+            {
+                return false;
+            }
+            for (int i = 0; i < FrontPage.Length; i++)
+            {
+                if (FrontPage[i] != casted.FrontPage[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public new bool Equals(object? x, object? y)
+        {
+            if (x == null && y == null)
+            {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null))
+            {
+                return false;
+            }
+            if (x is Book)
+            {
+                var casted = (Book)x;
+                return casted.Equals(y);
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public int GetHashCode(object obj)
+        {
+            return GetHashCode(obj);
+        }
         public Book CreateCopy()
         {
             var answer = new Book();

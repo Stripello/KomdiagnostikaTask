@@ -44,7 +44,9 @@ namespace BookCathalog.Service
             using (var db = new LiteDatabase(_dbLocation))
             {
                 var storedBooks = db.GetCollection<Book>(_dbName);
-                var book = storedBooks.Query().Where(x => x.Guid == oldBook.Guid && x.Author == oldBook.Author && x.Isbn == oldBook.Isbn).First();
+                var book = storedBooks.FindOne(x=>x.Author == oldBook.Author &&
+                x.Year == oldBook.Year && x.Title == oldBook.Title &&  x.Guid == oldBook.Guid && x.About == oldBook.About);
+                
                 book.Title = newBook.Title;
                 book.Author = newBook.Author;
                 book.About = newBook.About;
@@ -52,6 +54,7 @@ namespace BookCathalog.Service
                 book.Isbn = newBook.Isbn;
                 book.Year = newBook.Year;
                 book.FrontPage = newBook.FrontPage;
+                
                 storedBooks.Update(book);
             }
         }

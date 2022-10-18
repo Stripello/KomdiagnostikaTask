@@ -39,10 +39,9 @@ namespace BookCathalog.ViewModels
 
         private void AddBook()
         {
-            CurrentBook.FrontPage = _imageProcessor.ImageToByte(_frontPageLocation);
             _bookServise.AddBook(CurrentBook);
         }
-        /*
+        
         private DelegateCommand _selectFrontPage;
         public DelegateCommand SelectFrontPageCommand =>
             _selectFrontPage ?? (_selectFrontPage = new DelegateCommand(SelectFrontPage));
@@ -59,7 +58,7 @@ namespace BookCathalog.ViewModels
                 FrontPageLocation = dialog.FileName;
             }
         }
-        */
+        
         //Some neceserry Prism stuff.
         public string Title { get; set; } = "Adding book";
 
