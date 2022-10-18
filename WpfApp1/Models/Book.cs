@@ -1,18 +1,58 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.ComponentModel;
+using System.Security.RightsManagement;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace BookCathalog.Dal.Models
 {
-    public class Book : IDataErrorInfo
+    public class Book : BindableBase, IDataErrorInfo
     {
-        public string Title { get; set; } = string.Empty;
-        public string Author { get; set; } = string.Empty;
-        public int Year { get; set; }
-        public string Isbn { get; set; } = string.Empty;
-        public string Guid { get; set; } = string.Empty;
-        public string About { get; set; } = string.Empty;
-        public byte[] FrontPage { get; set; }
+        private string _title = string.Empty;
+        public string Title
+        {
+            get => _title;
+            set => SetProperty<string>(ref _title, value);
+        }
+        public string _author = string.Empty;
+        public string Author
+        {
+            get => _author;
+            set => SetProperty<string>(ref _author, value);
+        }
+        public int _year;
+        public int Year
+        {
+            get => _year;
+            set => SetProperty<int>(ref _year, value);
+        }
+        public string _isbn = string.Empty;
+        public string Isbn
+        {
+            get => _isbn;
+            set => SetProperty<string>(ref _isbn, value);
+        }
+
+        public string _guid = string.Empty;
+        public string Guid
+        {
+            get => _guid;
+            set => SetProperty<string>(ref _guid, value);
+        }
+        public string _about = string.Empty;
+        public string About
+        {
+            get => _about;
+            set => SetProperty<string>(ref _about, value);
+        }
+        public byte[] _frontPage;
+        public byte[] FrontPage
+        {
+            get => _frontPage;
+            set => SetProperty<byte[]>(ref _frontPage, value);
+        }
+
         //Buisness must set maximal year above current.
         private const int yearAboveCurrent = 3;
         public string Error { get => null; }
@@ -47,6 +87,10 @@ namespace BookCathalog.Dal.Models
                         }
                         break;
                     case nameof(Isbn):
+                        if (string.IsNullOrEmpty(Isbn))
+                        {
+                            return "ISBN is empty.";
+                        }
                         var tmp = Isbn.ToUpper();
                         foreach (var element in tmp)
                         {

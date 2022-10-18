@@ -1,6 +1,9 @@
 ﻿using BookCathalog.Dal.Models;
+using BookCathalog.Service;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -36,6 +39,16 @@ namespace BookCathalog.Views
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.FileName = "Bitmap picture";
+            dialog.DefaultExt = ".bmp";
+            dialog.Filter = "Bitmap pictures (.bmp)|*.bmp";
+            bool? result = dialog.ShowDialog();
+            Book.FrontPage = File.ReadAllBytes(dialog.FileName);
         }
     }
 }
