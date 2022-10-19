@@ -4,17 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace BookCathalog.Service
 {
     public class BooksServiceLiteDb : IBookService
     {
-        //Must be set by business in app.config file.
         const string _defaultDbFileName = "BooksLiteDatabase.db";
         private readonly string _dbLocation;
         private readonly string _dbName;
-        public BooksServiceLiteDb( string dbName, string dbFileName = _defaultDbFileName,string dbFolder = "")
+        public BooksServiceLiteDb(string dbName, string dbFileName = _defaultDbFileName, string dbFolder = "")
         {
             _dbLocation = string.Empty;
             if (Directory.Exists(dbFolder))
@@ -45,7 +43,7 @@ namespace BookCathalog.Service
             {
                 var storedBooks = db.GetCollection<Book>(_dbName);
                 var book = storedBooks.FindById(oldBook.Id);
-                
+
                 book.Title = newBook.Title;
                 book.Author = newBook.Author;
                 book.About = newBook.About;
@@ -53,7 +51,7 @@ namespace BookCathalog.Service
                 book.Isbn = newBook.Isbn;
                 book.Year = newBook.Year;
                 book.FrontPage = newBook.FrontPage;
-                
+
                 storedBooks.Update(book);
             }
         }

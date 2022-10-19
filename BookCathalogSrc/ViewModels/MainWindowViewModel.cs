@@ -1,16 +1,9 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BookCathalog.Dal.Models;
 using BookCathalog.Service;
+using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Services.Dialogs;
-using BookCathalog.Dal.Models;
-using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace BookCathalog.ViewModels
 {
@@ -31,7 +24,12 @@ namespace BookCathalog.ViewModels
         public Book SelectedBook
         {
             get => _selectedBook;
-            set => SetProperty<Book>(ref _selectedBook, value);
+            set 
+            {
+                CommandEdit.RaiseCanExecuteChanged();
+                SetProperty<Book>(ref _selectedBook, value);
+            }
+                
         }
 
         private DelegateCommand _commandLoad;
@@ -51,11 +49,9 @@ namespace BookCathalog.ViewModels
             if (results.Parameters.ContainsKey("addedBook"))
             {
                 var addedBook = results.Parameters.GetValue<Book>("addedBook");
-                AllBooks.Add(results.Parameters.GetValue<Book>("addedBook"));
+                AllBooks.Add(addedBook);
             }
         }
-
-
 
         private DelegateCommand _commandDelete;
         public DelegateCommand CommandDelete =>
@@ -68,7 +64,7 @@ namespace BookCathalog.ViewModels
 
         private DelegateCommand _commandEdit;
         public DelegateCommand CommandEdit =>
-            _commandEdit ?? (_commandEdit = new DelegateCommand(CommandUpdateExecute));
+            _commandEdit ?? (_commandEdit = new DelegateCommand(CommandUpdateExecute, ()=>_selectedBook!=null));
         private void CommandUpdateExecute()
         {
             var param = new DialogParameters();
@@ -76,9 +72,8 @@ namespace BookCathalog.ViewModels
             _dialogService.ShowDialog("EditBookDialog", param, Callback);
             AllBooks.Clear();
             AllBooks.AddRange(_ibookServise.GetAll());
-
             void Callback(IDialogResult result) { }
         }
-       
+
     }
 }

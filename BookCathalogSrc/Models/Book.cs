@@ -1,11 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Security.RightsManagement;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 
 namespace BookCathalog.Dal.Models
 {
@@ -209,7 +205,7 @@ namespace BookCathalog.Dal.Models
                     return false;
                 }
             }
-            
+
             for (int i = 0; i < FrontPage.Length; i++)
             {
                 if (FrontPage[i] != casted.FrontPage[i])

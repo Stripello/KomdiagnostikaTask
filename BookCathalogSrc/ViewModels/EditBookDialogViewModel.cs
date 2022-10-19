@@ -4,10 +4,6 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookCathalog.ViewModels
 {
@@ -32,12 +28,12 @@ namespace BookCathalog.ViewModels
         private DelegateCommand _editBookCommand;
         public DelegateCommand EditBookCommand =>
             _editBookCommand ?? (_editBookCommand =
-            new DelegateCommand(() => _bookServise.UpdateBook(_oldBook, _currentBook), ()=> CurrentBook.IsValid()));
+            new DelegateCommand(() => _bookServise.UpdateBook(_oldBook, _currentBook), () => CurrentBook.IsValid()));
 
         private DelegateCommand _undoChangesCommand;
         public DelegateCommand UdnoChangesCommand =>
             _undoChangesCommand ?? (_undoChangesCommand =
-            new DelegateCommand( () => { CurrentBook = _oldBook.CreateCopy();} ));
+            new DelegateCommand(() => { CurrentBook = _oldBook.CreateCopy(); }));
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
@@ -59,10 +55,10 @@ namespace BookCathalog.ViewModels
 
         public event Action<IDialogResult> RequestClose;
         public bool CanCloseDialog() { return true; }
-        public void OnDialogClosed() 
+        public void OnDialogClosed()
         {
             _currentBook.PropertyChanged -= _currentBook_PropertyChanged;
         }
-        
+
     }
 }

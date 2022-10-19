@@ -1,22 +1,9 @@
 ﻿using BookCathalog.Dal.Models;
-using BookCathalog.Service;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BookCathalog.Views
 {
@@ -27,8 +14,8 @@ namespace BookCathalog.Views
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty BookProperty = 
-            DependencyProperty.Register("Book", typeof(Book),typeof(BookView));
+        public static readonly DependencyProperty BookProperty =
+            DependencyProperty.Register("Book", typeof(Book), typeof(BookView));
 
         public Book Book
         {
@@ -52,7 +39,7 @@ namespace BookCathalog.Views
             {
                 Book.FrontPage = File.ReadAllBytes(dialog.FileName);
             }
-            
+
         }
     }
 }

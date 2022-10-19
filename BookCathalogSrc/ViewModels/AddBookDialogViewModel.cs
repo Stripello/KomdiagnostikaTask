@@ -29,13 +29,13 @@ namespace BookCathalog.ViewModels
 
         private DelegateCommand _addBookCommand;
         public DelegateCommand AddBookCommand =>
-            _addBookCommand ?? (_addBookCommand = new DelegateCommand(AddBook, ()=>CurrentBook.IsValid()));
+            _addBookCommand ?? (_addBookCommand = new DelegateCommand(AddBook, () => CurrentBook.IsValid()));
 
         private void AddBook()
         {
             _bookServise.AddBook(CurrentBook);
             _dialogResult = new DialogResult();
-            _dialogResult.Parameters.Add("addedBook",CurrentBook);
+            _dialogResult.Parameters.Add("addedBook", CurrentBook);
             RaiseRequestClose(_dialogResult);
         }
 
@@ -65,8 +65,8 @@ namespace BookCathalog.ViewModels
         public string Title { get; set; } = "Adding book";
 
         public event Action<IDialogResult> RequestClose;
-        public bool CanCloseDialog() { return true;}
-        public void OnDialogClosed() 
+        public bool CanCloseDialog() { return true; }
+        public void OnDialogClosed()
         {
             CurrentBook.PropertyChanged -= CurrentBook_PropertyChanged;
         }

@@ -1,18 +1,10 @@
-﻿using Prism.Ioc;
-using Prism.Unity;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using BookCathalog.Service;
-using BookCathalog.Views;
-using Prism.Services.Dialogs;
-using BookCathalog.Dal;
-using BookCathalog.Service;
+﻿using BookCathalog.Service;
 using BookCathalog.ViewModels;
+using BookCathalog.Views;
+using Prism.Ioc;
+using Prism.Unity;
+using System.Configuration;
+using System.Windows;
 
 namespace BookCathalog
 {
@@ -23,9 +15,9 @@ namespace BookCathalog
             var dbFileName = ConfigurationManager.AppSettings["litedbfilename"];
             var dbName = ConfigurationManager.AppSettings["dbname"];
             containerRegistry.RegisterDialog<AddBookDialog, AddBookDialogViewModel>();
-            containerRegistry.RegisterDialog<EditBookDialog, EditBookDialogViewModel>(); 
-            containerRegistry.RegisterInstance<IBookService>(new BooksServiceLiteDb(dbName,dbFileName));
-            containerRegistry.RegisterSingleton<IImageProcessor,ImageProcessor>();
+            containerRegistry.RegisterDialog<EditBookDialog, EditBookDialogViewModel>();
+            containerRegistry.RegisterInstance<IBookService>(new BooksServiceLiteDb(dbName, dbFileName));
+            containerRegistry.RegisterSingleton<IImageProcessor, ImageProcessor>();
         }
         protected override Window CreateShell()
         {
