@@ -200,7 +200,7 @@ namespace BookCathalog.Dal.Models
             }
             if (FrontPage != null && casted.FrontPage != null)
             {
-                if (this.FrontPage.Length != casted.FrontPage.Length)
+                if (FrontPage.Length != casted.FrontPage.Length)
                 {
                     return false;
                 }
