@@ -26,8 +26,8 @@ namespace BookCathalog.ViewModels
             get => _selectedBook;
             set 
             {
-                CommandEdit.RaiseCanExecuteChanged();
                 SetProperty<Book>(ref _selectedBook, value);
+                CommandEdit.RaiseCanExecuteChanged();
             }
                 
         }
@@ -58,7 +58,7 @@ namespace BookCathalog.ViewModels
             _commandDelete ?? (_commandDelete = new DelegateCommand(CommandDeleteExecute));
         private void CommandDeleteExecute()
         {
-            _ibookServise.DeleteBook(_selectedBook);
+            _ibookServise.DeleteBook(_selectedBook.Id);
             AllBooks.Remove(_selectedBook);
         }
 

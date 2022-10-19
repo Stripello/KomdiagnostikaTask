@@ -14,35 +14,30 @@ namespace BookCathalog.Service
         private readonly string _dbName;
         public BooksServiceLiteDb(string dbName, string dbFileName = _defaultDbFileName, string dbFolder = "")
         {
-            _dbLocation = string.Empty;
-            if (Directory.Exists(dbFolder))
+            if (!Directory.Exists(dbFolder))
             {
-                _dbLocation += dbFolder;
+                var currentDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                dbFolder = Path.Combine(currentDirectory, "Data");
             }
-            else
-            {
-                _dbLocation += Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-                _dbLocation += @"\Data";
-            }
-            _dbLocation += @$"\{dbFileName}";
+            _dbLocation =Path.Combine(dbFolder,dbFileName);
             _dbName = dbName;
         }
 
-        public void DeleteBook(Book book)
+        public void DeleteBook(int bookId)
         {
             using (var db = new LiteDatabase(_dbLocation))
             {
                 var storedBooks = db.GetCollection<Book>(_dbName);
-                storedBooks.DeleteMany(x => x.Guid == book.Guid && x.Author == book.Author && x.Isbn == book.Isbn);
+                storedBooks.Delete(bookId);
             }
         }
 
-        public void UpdateBook(Book oldBook, Book newBook)
+        public void UpdateBook(int oldBookId, Book newBook)
         {
             using (var db = new LiteDatabase(_dbLocation))
             {
                 var storedBooks = db.GetCollection<Book>(_dbName);
-                var book = storedBooks.FindById(oldBook.Id);
+                var book = storedBooks.FindById(oldBookId);
 
                 book.Title = newBook.Title;
                 book.Author = newBook.Author;

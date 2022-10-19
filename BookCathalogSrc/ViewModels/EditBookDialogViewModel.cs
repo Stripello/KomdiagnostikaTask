@@ -28,7 +28,7 @@ namespace BookCathalog.ViewModels
         private DelegateCommand _editBookCommand;
         public DelegateCommand EditBookCommand =>
             _editBookCommand ?? (_editBookCommand =
-            new DelegateCommand(() => _bookServise.UpdateBook(_oldBook, _currentBook), () => CurrentBook.IsValid()));
+            new DelegateCommand(() => _bookServise.UpdateBook(_oldBook.Id, _currentBook), () => CurrentBook.IsValid()));
 
         private DelegateCommand _undoChangesCommand;
         public DelegateCommand UdnoChangesCommand =>
