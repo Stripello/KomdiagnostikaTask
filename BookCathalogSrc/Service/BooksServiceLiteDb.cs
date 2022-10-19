@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace BookCathalog.Service
 {
-    public class BooksServiceLiteDb : IbookServise
+    public class BooksServiceLiteDb : IBookService
     {
         //Must be set by business in app.config file.
         const string _defaultDbFileName = "BooksLiteDatabase.db";

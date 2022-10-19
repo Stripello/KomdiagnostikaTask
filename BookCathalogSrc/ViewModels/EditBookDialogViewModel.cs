@@ -13,13 +13,13 @@ namespace BookCathalog.ViewModels
 {
     public class EditBookDialogViewModel : BindableBase, IDialogAware
     {
-        public EditBookDialogViewModel(IbookServise bookService, IImageProcessor imageProcessor)
+        public EditBookDialogViewModel(IBookService bookService, IImageProcessor imageProcessor)
         {
             _bookServise = bookService;
             _imageProcessor = imageProcessor;
         }
         private IImageProcessor _imageProcessor;
-        private IbookServise _bookServise;
+        private IBookService _bookServise;
 
         private Book _oldBook = new Book();
         private Book _currentBook = new Book();
@@ -37,7 +37,7 @@ namespace BookCathalog.ViewModels
         private DelegateCommand _undoChangesCommand;
         public DelegateCommand UdnoChangesCommand =>
             _undoChangesCommand ?? (_undoChangesCommand =
-            new DelegateCommand( () => { _currentBook = _oldBook.CreateCopy();} ));
+            new DelegateCommand( () => { CurrentBook = _oldBook.CreateCopy();} ));
 
         public void OnDialogOpened(IDialogParameters parameters)
         {

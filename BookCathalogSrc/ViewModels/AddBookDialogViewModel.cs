@@ -9,15 +9,17 @@ namespace BookCathalog.ViewModels
 {
     public class AddBookDialogViewModel : BindableBase, IDialogAware
     {
-        public AddBookDialogViewModel(IbookServise bookService, IImageProcessor imageProcessor)
+        public AddBookDialogViewModel(IBookService bookService, IImageProcessor imageProcessor)
         {
             _bookServise = bookService;
             _imageProcessor = imageProcessor;
         }
+
         private IImageProcessor _imageProcessor;
-        private IbookServise _bookServise;
+        private IBookService _bookServise;
         private IDialogResult _dialogResult;
-        public Book CurrentBook { get; set; } = new Book();
+        public Book CurrentBook { get; } = new Book();
+
         private string _frontPageLocation = string.Empty;
         public string FrontPageLocation
         {
@@ -27,7 +29,7 @@ namespace BookCathalog.ViewModels
 
         private DelegateCommand _addBookCommand;
         public DelegateCommand AddBookCommand =>
-            _addBookCommand ?? (_addBookCommand = new DelegateCommand(AddBook));
+            _addBookCommand ?? (_addBookCommand = new DelegateCommand(AddBook, ()=>CurrentBook.IsValid()));
 
         private void AddBook()
         {
@@ -35,10 +37,6 @@ namespace BookCathalog.ViewModels
             _dialogResult = new DialogResult();
             _dialogResult.Parameters.Add("addedBook",CurrentBook);
             RaiseRequestClose(_dialogResult);
-        }
-        public bool CanAddBook()
-        {
-            return (CurrentBook.Error == null || CurrentBook.Error.Length == 0);
         }
 
         private DelegateCommand _selectFrontPage;
@@ -68,8 +66,17 @@ namespace BookCathalog.ViewModels
 
         public event Action<IDialogResult> RequestClose;
         public bool CanCloseDialog() { return true;}
-        public void OnDialogClosed() {}
-        public void OnDialogOpened(IDialogParameters parameters) {}
-        private void OnAttach() {}
+        public void OnDialogClosed() 
+        {
+            CurrentBook.PropertyChanged -= CurrentBook_PropertyChanged;
+        }
+        public void OnDialogOpened(IDialogParameters parameters)
+        {
+            CurrentBook.PropertyChanged += CurrentBook_PropertyChanged;
+        }
+        private void CurrentBook_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            AddBookCommand.RaiseCanExecuteChanged();
+        }
     }
 }

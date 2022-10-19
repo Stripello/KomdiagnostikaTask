@@ -17,10 +17,10 @@ namespace BookCathalog.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private IDialogService _dialogService;
-        private IbookServise _ibookServise;
+        private IBookService _ibookServise;
         public ObservableCollection<Book> AllBooks { get; private set; } = new ObservableCollection<Book>();
 
-        public MainWindowViewModel(IDialogService dialogService, IbookServise bookService)
+        public MainWindowViewModel(IDialogService dialogService, IBookService bookService)
         {
             _dialogService = dialogService;
             _ibookServise = bookService;

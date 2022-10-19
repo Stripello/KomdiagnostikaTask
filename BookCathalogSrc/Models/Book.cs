@@ -9,7 +9,7 @@ using System.Windows.Navigation;
 
 namespace BookCathalog.Dal.Models
 {
-    public class Book : BindableBase, IDataErrorInfo , IEqualityComparer
+    public class Book : BindableBase, IDataErrorInfo, IEqualityComparer
     {
         public int Id { get; set; }
         private string _title = string.Empty;
@@ -58,7 +58,7 @@ namespace BookCathalog.Dal.Models
 
         //Buisness must set maximal year above current.
         private const int yearAboveCurrent = 3;
-        public string Error { get => null; }
+        public string Error { get => string.Empty; }
 
         //Using for validate data entered by user in AddBookDialog form.
         public string this[string propertyName]
@@ -68,87 +68,105 @@ namespace BookCathalog.Dal.Models
                 switch (propertyName)
                 {
                     case nameof(Title):
-                        if (string.IsNullOrEmpty(Title))
-                        {
-                            return "Empty field is not allowed.";
-                        }
-                        break;
+                        return TitleIsValid();
                     case nameof(Author):
-                        if (string.IsNullOrEmpty(Author))
-                        {
-                            return "Empty field is not allowed.";
-                        }
-                        break;
+                        return AuthorIsValid();
                     case nameof(Year):
-                        if (Year < 0)
-                        {
-                            return "Year B.C. is not allowed.";
-                        }
-                        if (yearAboveCurrent + DateTime.Now.Year < Year)
-                        {
-                            return "Year is too big.";
-                        }
-                        break;
+                        return YearIsValid();
                     case nameof(Isbn):
-                        if (string.IsNullOrEmpty(Isbn))
-                        {
-                            return "ISBN is empty.";
-                        }
-                        var tmp = Isbn.ToUpper();
-                        foreach (var element in tmp)
-                        {
-                            if (!char.IsDigit(element) && !(element == 'X'))
-                            {
-                                return "ISBN contains forbidden symbols.";
-                            }
-                        }
-                        var length = Isbn.Length;
-                        if (length == 10)
-                        {
-                            var isbnSum = 0;
-                            for (int i = 0; i < length; i++)
-                            {
-                                if (tmp[i] == 'X')
-                                {
-                                    isbnSum += (10 - i) * 10;
-                                }
-                                else
-                                {
-                                    isbnSum += (10 - i) * int.Parse(tmp[i].ToString());
-                                }
-                            }
-                            return isbnSum % 11 == 0 ? null : "Invalid 10-sign ISBN.";
-                        }
-                        else if (length == 13)
-                        {
-                            var isbnSum = 0;
-                            for (int i = 0; i < length; i++)
-                            {
-                                if (tmp[i] == 'X')
-                                {
-                                    isbnSum += (i % 2 == 0 ? 1 : 3) * 10;
-                                }
-                                else
-                                {
-                                    isbnSum += (i % 2 == 0 ? 1 : 3) * int.Parse(tmp[i].ToString());
-                                }
-                            }
-                            return isbnSum % 10 == 0 ? null : "Invalid 13-sign ISBN.";
-                        }
-                        else
-                        {
-                            return "Invalid ISBN length.";
-                        }
-                        break;
+                        return IsbnIsValid();
                     case nameof(Guid):
-                        if (!System.Guid.TryParse(Guid, out _))
-                        {
-                            return "Invalid GUID.";
-                        }
-                        break;
+                        return GuidIsValid();
+                    default: return string.Empty;
                 }
-                return null;
             }
+        }
+
+        private string TitleIsValid()
+        {
+            if (string.IsNullOrEmpty(Title))
+            {
+                return "Empty field is not allowed.";
+            }
+            return string.Empty;
+        }
+        private string AuthorIsValid()
+        {
+            if (string.IsNullOrEmpty(Author))
+            {
+                return "Empty field is not allowed.";
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+        private string YearIsValid()
+        {
+            if (Year < 0)
+            {
+                return "Year B.C. is not allowed.";
+            }
+            if (yearAboveCurrent + DateTime.Now.Year < Year)
+            {
+                return "Year is too big.";
+            }
+            return string.Empty;
+        }
+        private string IsbnIsValid()
+        {
+            if (string.IsNullOrEmpty(Isbn))
+            {
+                return "ISBN is empty.";
+            }
+            var tmp = Isbn.ToUpper();
+            foreach (var element in tmp)
+            {
+                if (!char.IsDigit(element) && !(element == 'X'))
+                {
+                    return "ISBN contains forbidden symbols.";
+                }
+            }
+            var length = Isbn.Length;
+            if (length == 10)
+            {
+                var isbnSum = 0;
+                for (int i = 0; i < length; i++)
+                {
+                    if (tmp[i] == 'X')
+                    {
+                        isbnSum += (10 - i) * 10;
+                    }
+                    else
+                    {
+                        isbnSum += (10 - i) * int.Parse(tmp[i].ToString());
+                    }
+                }
+                return isbnSum % 11 == 0 ? string.Empty : "Invalid 10-sign ISBN.";
+            }
+            else
+            {
+                return "Invalid ISBN length.";
+            }
+        }
+        private string GuidIsValid()
+        {
+            if (!System.Guid.TryParse(Guid, out _))
+            {
+                return "Invalid GUID.";
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+        public bool IsValid()
+        {
+            return (TitleIsValid() == string.Empty &&
+                    AuthorIsValid() == string.Empty &&
+                    YearIsValid() == string.Empty &&
+                    IsbnIsValid() == string.Empty &&
+                    GuidIsValid() == string.Empty);
         }
 
         public override bool Equals(object? obj)

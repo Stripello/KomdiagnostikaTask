@@ -24,7 +24,7 @@ namespace BookCathalog
             var dbName = ConfigurationManager.AppSettings["dbname"];
             containerRegistry.RegisterDialog<AddBookDialog, AddBookDialogViewModel>();
             containerRegistry.RegisterDialog<EditBookDialog, EditBookDialogViewModel>(); 
-            containerRegistry.RegisterInstance<IbookServise>(new BooksServiceLiteDb(dbName,dbFileName));
+            containerRegistry.RegisterInstance<IBookService>(new BooksServiceLiteDb(dbName,dbFileName));
             containerRegistry.RegisterSingleton<IImageProcessor,ImageProcessor>();
         }
         protected override Window CreateShell()

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookCathalog.Service
 {
-    public interface IbookServise
+    public interface IBookService
     {
         public IList<Book> GetAll();
         public void AddBook(Book book);
