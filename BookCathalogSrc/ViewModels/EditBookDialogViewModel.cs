@@ -32,7 +32,7 @@ namespace BookCathalog.ViewModels
         private DelegateCommand _editBookCommand;
         public DelegateCommand EditBookCommand =>
             _editBookCommand ?? (_editBookCommand =
-            new DelegateCommand(() => _bookServise.UpdateBook(_oldBook, _currentBook)));
+            new DelegateCommand(() => _bookServise.UpdateBook(_oldBook, _currentBook), ()=> CurrentBook.IsValid()));
 
         private DelegateCommand _undoChangesCommand;
         public DelegateCommand UdnoChangesCommand =>
@@ -45,7 +45,13 @@ namespace BookCathalog.ViewModels
             {
                 _oldBook = parameters.GetValue<Book>("currentBook");
                 _currentBook = _oldBook.CreateCopy();
+                _currentBook.PropertyChanged += _currentBook_PropertyChanged;
             }
+        }
+
+        private void _currentBook_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            EditBookCommand.RaiseCanExecuteChanged();
         }
 
         //Some neceserry Prism stuff.
@@ -53,7 +59,10 @@ namespace BookCathalog.ViewModels
 
         public event Action<IDialogResult> RequestClose;
         public bool CanCloseDialog() { return true; }
-        public void OnDialogClosed() { }
+        public void OnDialogClosed() 
+        {
+            _currentBook.PropertyChanged -= _currentBook_PropertyChanged;
+        }
         
     }
 }
