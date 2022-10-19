@@ -4,8 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BookCathalog.Views"
+             xmlns:converters="clr-namespace:BookCathalog.Convertors"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="900">
+    <UserControl.Resources>
+        <converters:ByteArrayConverter x:Key="ByteArrayConverter"/>
+        <DataTemplate x:Key="NoImageContent">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Text="No image selected."/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="GotImageContent" >
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding Book.FrontPage}"/>
+        </DataTemplate>
+
+        <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
+            <Setter Property="ContentTemplate" Value="{StaticResource NoImageContent}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Book.FrontPage , Converter={StaticResource ByteArrayConverter}}" Value="True">
+                    <Setter Property="ContentTemplate" Value="{StaticResource GotImageContent}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, 
                                AncestorType={x:Type local:BookView}}}">
         <Grid.ColumnDefinitions>
@@ -98,6 +118,6 @@
         <Button Grid.Row="6" HorizontalAlignment="Left" Grid.Column="1" Content ="Select" Height="50" Width="100" VerticalAlignment="Top" Click="Button_Click"/>
 
     </Grid>
-        <Image Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding Book.FrontPage}"/>
-        </Grid>
+        <ContentPresenter Grid.Column="1" Style="{StaticResource MyContentStyle}" Content="{Binding}"/>
+    </Grid>
 </UserControl>

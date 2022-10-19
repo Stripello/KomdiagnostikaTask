@@ -48,7 +48,11 @@ namespace BookCathalog.Views
             dialog.DefaultExt = ".bmp";
             dialog.Filter = "Bitmap pictures (.bmp)|*.bmp";
             bool? result = dialog.ShowDialog();
-            Book.FrontPage = File.ReadAllBytes(dialog.FileName);
+            if (result != null && result == true)
+            {
+                Book.FrontPage = File.ReadAllBytes(dialog.FileName);
+            }
+            
         }
     }
 }
