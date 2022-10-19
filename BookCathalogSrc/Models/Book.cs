@@ -37,7 +37,7 @@ namespace BookCathalog.Dal.Models
             set => SetProperty<string>(ref _isbn, value);
         }
 
-        private string _guid = string.Empty;
+        private string _guid = System.Guid.NewGuid().ToString();
         public string Guid
         {
             get => _guid;
@@ -135,14 +135,30 @@ namespace BookCathalog.Dal.Models
                 {
                     if (tmp[i] == 'X')
                     {
-                        isbnSum += (10 - i) * 10;
+                        isbnSum += (length - i) * 10;
                     }
                     else
                     {
-                        isbnSum += (10 - i) * int.Parse(tmp[i].ToString());
+                        isbnSum += (length - i) * int.Parse(tmp[i].ToString());
                     }
                 }
-                return isbnSum % 11 == 0 ? string.Empty : "Invalid 10-sign ISBN.";
+                return isbnSum % 11 == 0 ? string.Empty : $"Invalid {length}-sign ISBN.";
+            }
+            else if (length == 13)
+            {
+                var isbnSum = 0;
+                for (int i = 0; i < length; i++)
+                {
+                    if (tmp[i] == 'X')
+                    {
+                        isbnSum += (i % 2 == 0 ? 1 : 3) * 10;
+                    }
+                    else
+                    {
+                        isbnSum += (i % 2 == 0 ? 1 : 3) * int.Parse(tmp[i].ToString());
+                    }
+                }
+                return isbnSum % 10 == 0 ? string.Empty : $"Invalid {length}-sign ISBN.";
             }
             else
             {
