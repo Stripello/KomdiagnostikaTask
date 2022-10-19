@@ -49,7 +49,7 @@ namespace BookCathalog.Dal.Models
             get => _about;
             set => SetProperty<string>(ref _about, value);
         }
-        private byte[] _frontPage;
+        private byte[] _frontPage = new byte[] { };
         public byte[] FrontPage
         {
             get => _frontPage;
