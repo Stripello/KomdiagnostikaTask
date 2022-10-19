@@ -77,10 +77,7 @@ namespace BookCathalog.ViewModels
             AllBooks.Clear();
             AllBooks.AddRange(_ibookServise.GetAll());
 
-            void Callback(IDialogResult result)
-            {
-                //tcs.SetResult(result.Parameters.GetValue<bool>("confirmed"));
-            }
+            void Callback(IDialogResult result) { }
         }
        
     }
