@@ -40,10 +40,22 @@ namespace BookCathalog.ViewModels
 
         private void CommandLoadExecute()
         {
-            _dialogService.ShowDialog("AddBookDialog");
-            var newOne = _ibookServise.GetAll();
-            AllBooks.AddRange(newOne.Except(AllBooks));
+            _dialogService.ShowDialog("AddBookDialog", CommandLoadCallback);
         }
+        private void CommandLoadCallback(IDialogResult results)
+        {
+            if (results == null)
+            {
+                return;
+            }
+            if (results.Parameters.ContainsKey("addedBook"))
+            {
+                var addedBook = results.Parameters.GetValue<Book>("addedBook");
+                AllBooks.Add(results.Parameters.GetValue<Book>("addedBook"));
+            }
+        }
+
+
 
         private DelegateCommand _commandDelete;
         public DelegateCommand CommandDelete =>

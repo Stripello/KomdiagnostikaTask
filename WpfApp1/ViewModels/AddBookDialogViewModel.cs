@@ -4,15 +4,6 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace BookCathalog.ViewModels
 {
@@ -25,6 +16,7 @@ namespace BookCathalog.ViewModels
         }
         private IImageProcessor _imageProcessor;
         private IbookServise _bookServise;
+        private IDialogResult _dialogResult;
         public Book CurrentBook { get; set; } = new Book();
         private string _frontPageLocation = string.Empty;
         public string FrontPageLocation
@@ -40,12 +32,19 @@ namespace BookCathalog.ViewModels
         private void AddBook()
         {
             _bookServise.AddBook(CurrentBook);
+            _dialogResult = new DialogResult();
+            _dialogResult.Parameters.Add("addedBook",CurrentBook);
+            RaiseRequestClose(_dialogResult);
         }
-        
+        public bool CanAddBook()
+        {
+            return (CurrentBook.Error == null || CurrentBook.Error.Length == 0);
+        }
+
         private DelegateCommand _selectFrontPage;
         public DelegateCommand SelectFrontPageCommand =>
             _selectFrontPage ?? (_selectFrontPage = new DelegateCommand(SelectFrontPage));
-        
+
         private void SelectFrontPage()
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
@@ -58,13 +57,19 @@ namespace BookCathalog.ViewModels
                 FrontPageLocation = dialog.FileName;
             }
         }
-        
+
+        public virtual void RaiseRequestClose(IDialogResult dialogResult)
+        {
+            RequestClose?.Invoke(dialogResult);
+        }
+
         //Some neceserry Prism stuff.
         public string Title { get; set; } = "Adding book";
 
         public event Action<IDialogResult> RequestClose;
-        public bool CanCloseDialog() { return true; }
-        public void OnDialogClosed() { }
-        public void OnDialogOpened(IDialogParameters parameters) { }
+        public bool CanCloseDialog() { return true;}
+        public void OnDialogClosed() {}
+        public void OnDialogOpened(IDialogParameters parameters) {}
+        private void OnAttach() {}
     }
 }

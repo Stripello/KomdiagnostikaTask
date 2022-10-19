@@ -44,8 +44,7 @@ namespace BookCathalog.Service
             using (var db = new LiteDatabase(_dbLocation))
             {
                 var storedBooks = db.GetCollection<Book>(_dbName);
-                var book = storedBooks.FindOne(x=>x.Author == oldBook.Author &&
-                x.Year == oldBook.Year && x.Title == oldBook.Title &&  x.Guid == oldBook.Guid && x.About == oldBook.About);
+                var book = storedBooks.FindById(oldBook.Id);
                 
                 book.Title = newBook.Title;
                 book.Author = newBook.Author;

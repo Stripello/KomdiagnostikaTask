@@ -163,10 +163,19 @@ namespace BookCathalog.Dal.Models
             {
                 return false;
             }
-            if (this.FrontPage.Length != casted.FrontPage.Length)
+            if ((FrontPage == null && casted.FrontPage != null) ||
+                (FrontPage != null && casted.FrontPage == null))
             {
                 return false;
             }
+            if (FrontPage != null && casted.FrontPage != null)
+            {
+                if (this.FrontPage.Length != casted.FrontPage.Length)
+                {
+                    return false;
+                }
+            }
+            
             for (int i = 0; i < FrontPage.Length; i++)
             {
                 if (FrontPage[i] != casted.FrontPage[i])
@@ -178,7 +187,7 @@ namespace BookCathalog.Dal.Models
             return true;
         }
 
-        public new bool Equals(object? x, object? y)
+        public bool Equals(object? x, object? y)
         {
             if (x == null && y == null)
             {
